@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="card shadow-sm" style="min-height: 450px;">
+    <div class="card-body p-4">
+        <h2 class="text-center text-primary mb-4">Add Question</h2>
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4 text-center">New Question</legend>
+
+                <!-- Name Field -->
+                <div class="form-group mb-3">
+                    {{ form.name.label(class_="form-label") }}
+                    {{ form.name(class_="form-control form-control-lg " + ("is-invalid" if form.name.errors else ""), placeholder="Enter Question Name") }}
+                    {% if form.name.errors %}
+                    <div class="invalid-feedback">
+                        {% for error in form.name.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Chapter Id Field -->
+                <div class="form-group mb-3">
+                    {{ form.chapter_id.label(class_="form-label") }}
+                    {{ form.chapter_id(class_="form-control form-control-lg " + ("is-invalid" if form.chapter_id.errors else ""), placeholder="Enter Chapter Id") }}
+                    {% if form.chapter_id.errors %}
+                    <div class="invalid-feedback">
+                        {% for error in form.chapter_id.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Subject Id Field -->
+                <div class="form-group mb-3">
+                    {{ form.subject_id.label(class_="formSlabel") }}
+                    {{ form.subject_id(class_="form-control form-control-lg " + ("is-invalid" if form.subject_id.errors else ""), placeholder="Enter Subject Id") }}
+                    {% if form.subject_id.errors %}
+                    <div class="invalid-feedback">
+                        {% for error in form.subject_id.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Submit Button -->
+                <div class="d-grid mb-3">
+                    {{ form.submit(class_="btn btn-primary btn-lg") }}
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container my-4">
+    <h2 class="text-center mb-4">User Information</h2>
+    <table class="table table-bordered table-striped table-hover text-center">
+        <thead class="thead-dark">
+            <tr>
+                <th>Question Id</th>
+                <th>Question Name</th>  
+                <th>Subject Name</th>  
+                <th>Chapter Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for que in questions %}
+            <tr>
+                <td>{{ que.id }}</td>
+                <td>{{ que.name }}</td>
+                <td>{{ que.subject.name }}</td>
+                <td>{{ que.chapter.name }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}
