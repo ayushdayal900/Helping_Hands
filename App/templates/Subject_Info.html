@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container my-4">
+    <h2 class="text-center mb-4">User Information</h2>
+    <diV>
+    <table class="table table-bordered table-striped table-hover text-center">
+        <thead class="thead-dark">
+            <tr>
+                <th>Subject Id</th>
+                <th>Subject Name</th>  
+                <th>Number of chapters</th>  
+                <th>Number of questions</th>  
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ sub.id }}</td>
+                <td>{{ sub.name }}</td>
+                <td>{{ sub.no_of_chapters }}</td>
+                <td>{{ sub.no_of_questions }}</td>
+            </tr>
+        </tbody>
+    </table>
+    </diV>
+</div>
+{% endblock content %}

@@ -1,12 +1,14 @@
 import os
 from operator import or_
-from flask import render_template, request, redirect, url_for, flash
+from flask import abort, render_template, request, redirect, url_for, flash
 from App.models import Questions, User, Subjects, Chapters
 from App.forms import ChapterForm, QuestionForm, RegistrationForm, LoginForm, SubjectForm, UpdateAccountForm
-from App import app, db,bcrypt
+from App import app, db, bcrypt
 from flask_login import login_user, current_user, login_required, logout_user 
 import secrets
 from PIL import Image
+
+
 
 
 
@@ -166,7 +168,7 @@ def new_sub():
 
         flash('New Subject Created..!', 'success')
         return redirect(url_for('home'))
-    return render_template('add_sub.html', title='New Subject', form = form)
+    return render_template('add_sub.html', title='New Subject', form = form, legend='New Subject')
 
 
 @app.route('/chapters/new', methods=['GET', 'POST'])
@@ -230,8 +232,8 @@ def new_que():
 
 @app.route('/subjects/list',methods = ['GET','POST'])
 def subject_list():
-    subjects = Subjects.query.all()
-    return render_template('subject_list.html',title = 'Subjects', subjects = subjects)
+    sub = Subjects.query.all()
+    return render_template('subject_list.html',title = 'Subjects', sub = sub)
 
 
 @app.route('/subjects/chapters',methods = ['GET','POST'])
@@ -247,3 +249,30 @@ def question_list():
     questions = Questions.query.all()
     return render_template('question_list.html',title = 'Questions', questions = questions)
 
+
+@app.route('/subjects/<int:sub_id>')
+def subject_info(sub_id):
+    sub = Subjects.query.get_or_404(sub_id)
+    return render_template('Subject_Info.html', title = sub.name, sub=sub)
+
+
+@app.route('/subjects/<int:sub_id>/update',methods = ['GET','POST'])
+@login_required
+def update_sub(sub_id):
+    form = SubjectForm()
+    sub = Subjects.query.get_or_404(sub_id)
+    
+    # for admin only
+    if sub is None:
+        abort(403)
+
+    if form.validate_on_submit():
+        sub.name = form.name.data
+        db.session.commit()
+        flash('Subject is updated', 'success')
+        return redirect(url_for('subject_info', sub_id = sub.id))
+    
+    elif request.method == 'GET':
+        form.name.data = sub.name
+
+    return render_template('add_sub.html', title='Update Subject', form = form, legend='Update Subject')
