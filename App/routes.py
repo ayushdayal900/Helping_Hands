@@ -123,10 +123,6 @@ def login():
 
 
 
-
-
-
-
 @app.route('/logout',methods = ['GET','POST'])
 def logout():
     
@@ -230,7 +226,7 @@ def new_que():
 
 
 
-@app.route('/subjects/list',methods = ['GET','POST'])
+@app.route('/subjects',methods = ['GET','POST'])
 def subject_list():
     sub = Subjects.query.all()
     return render_template('subject_list.html',title = 'Subjects', sub = sub)
